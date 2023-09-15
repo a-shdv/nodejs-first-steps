@@ -10,6 +10,7 @@ const compressStream = zlib.createGzip()
 // })
 
 // THE SAME AS
+// readStream.pipe(writeStream)
 
 const handleError = () => {
     console.log('Error during writing chunks into file.')
