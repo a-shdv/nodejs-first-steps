@@ -1,7 +1,5 @@
 const fs = require('fs')
 
-let newData = ''
-
 // READ
 // async function
 fs.readFile('./text.txt', (error, data) => {
