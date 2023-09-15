@@ -1,26 +1,25 @@
-const fs = require('fs')
-const zlib = require('zlib')
+const http = require('http')
 
-const readStream = fs.createReadStream('./files/text.txt')
-const writeStream = fs.createWriteStream('./files/another-text.txt')
-const compressStream = zlib.createGzip()
+const PORT = 3000
 
-// readStream.on('data', (chunk) => {
-//     writeStream.write(chunk)
-// })
 
-// THE SAME AS
-// readStream.pipe(writeStream)
+const server = http.createServer((req, res) => {
+    console.log(req.url, req.method) // url '/', method 'GET'
 
-const handleError = () => {
-    console.log('Error during writing chunks into file.')
-    readStream.destroy()
-    writeStream.end('Finished with error...')
-}
+    res.setHeader('Content-Type', 'application/json')
 
-readStream
-    .on('error', handleError)
-    .pipe(compressStream) // the data give will be compressed (check ./files/another-text.txt)
-    .pipe(writeStream) // duplex mode
-    .on('error', handleError)
+    const data = JSON.stringify([
+        { id: 1, name: 'John', surname: 'Doe' },
+        { id: 2, name: 'Jane', surname: 'Doe'}
+    ])
 
+    res.write(data)
+
+    res.end()
+
+    // res.write('<h1>test...</h1>')
+})
+
+server.listen(PORT, 'localhost', (error) => {
+    error ? console.log(error) : console.log(`The server has been started on port ${PORT}`)
+})
