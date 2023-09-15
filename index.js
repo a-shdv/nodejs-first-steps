@@ -1,3 +1,3 @@
-const {username: user, sayHello: say} = require('./modules')
+const os = require('os')
 
-console.log(say(user))
+console.log(os.platform(), os.release())
